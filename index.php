@@ -5,7 +5,7 @@ function getCpuLoad() {
     $load = sys_getloadavg();
     if ($load && isset($load[0])) {
       // Clamp and cast to int between 0 and 100
-      $value = (int)round($load[0]*100);
+      $value = (int)round($load[0]);
       return max(0, min(100, $value));
     }
   }
