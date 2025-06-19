@@ -1,12 +1,40 @@
 <?php
+function getCpuLoad() {
+  // Try to use sys_getloadavg if available (Unix systems)
+  if (function_exists('sys_getloadavg')) {
+    $load = sys_getloadavg();
+    if ($load && isset($load[0])) {
+      return $load[0];
+    }
+  }
+  // Fallback for Windows or if sys_getloadavg is unavailable
+  if (strncasecmp(PHP_OS, 'WIN', 3) === 0) {
+    // Use WMIC to get CPU load percentage
+    @exec('wmic cpu get loadpercentage /value', $output);
+    foreach ($output as $line) {
+      if (preg_match('/LoadPercentage=(\d+)/', $line, $matches)) {
+        return $matches[1];
+      }
+    }
+  }
+  return 'N/A';
+}
+
+header('x-as-current-load: ' . getCpuLoad());
+?>
+
+<?php
 $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 $isCurl = stripos($userAgent, 'curl') !== false;
 ?>
 
 <?php if ($isCurl): ?>
 PHP Origin Tools (Basic Output)
+
 Host name: <?php echo gethostname(); ?>
+
 Raw query string: <?php echo $_SERVER['QUERY_STRING']; ?>
+
 Request Headers:
   <?php
   $requestHeaders = function_exists('apache_request_headers') ? apache_request_headers() : [];
@@ -14,6 +42,7 @@ Request Headers:
       echo "$header: $value\n";
   }
   ?>
+
 POST Values:
 <?php print_r($_POST); ?>
 <?php else: ?>
