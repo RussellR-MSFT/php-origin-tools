@@ -5,7 +5,7 @@ function getCpuLoad() {
     $load = sys_getloadavg();
     if ($load && isset($load[0])) {
       // Clamp and cast to int between 0 and 100
-      $value = (int)round($load[0]);
+      $value = (int)round($load[0]*100);
       return max(0, min(100, $value));
     }
   }
@@ -39,12 +39,12 @@ Host name: <?php echo gethostname(); ?>
 Raw query string: <?php echo $_SERVER['QUERY_STRING']; ?>
 
 Request Headers:
-  <?php
-  $requestHeaders = function_exists('apache_request_headers') ? apache_request_headers() : [];
-  foreach ($requestHeaders as $header => $value) {
-      echo "$header: $value\n";
-  }
-  ?>
+<?php
+$requestHeaders = function_exists('apache_request_headers') ? apache_request_headers() : [];
+foreach ($requestHeaders as $header => $value) {
+echo "$header: $value\n";
+}
+?>
 
 POST Values:
 <?php print_r($_POST); ?>
