@@ -1,15 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <!--
-    Modified from the Debian original for Ubuntu
-    Last updated: 2016-11-16
-    See: https://launchpad.net/bugs/1288690
-  -->
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>PHP Origin Tools</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
   <?php
   $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
   $isCurl = stripos($userAgent, 'curl') !== false;
@@ -42,7 +30,18 @@
       </pre>
     </body>
   <?php else: ?>
-    <body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <!--
+    Modified from the Debian original for Ubuntu
+    Last updated: 2016-11-16
+    See: https://launchpad.net/bugs/1288690
+  -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>PHP Origin Tools</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>    <body>
       <div class="main_page">
         <div class="page_header floating_element">
          <img src="/tools.png" alt="tools image" class="floating_element"/> 
@@ -109,5 +108,5 @@
       <div class="validator">
       </div>
     </body>
-  <?php endif; ?>
-</html>          
+    </html>     
+  <?php endif; ?>    
