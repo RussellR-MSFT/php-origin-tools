@@ -1,35 +1,22 @@
-  <?php
-  $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-  $isCurl = stripos($userAgent, 'curl') !== false;
-  ?>
+<?php
+$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$isCurl = stripos($userAgent, 'curl') !== false;
+?>
 
-  <?php if ($isCurl): ?>
-    <body>
-      <pre>
-  PHP Origin Tools (Basic Output)
-
-  Host name: <?php echo gethostname(); ?>
-
-
-  Raw query string: <?php echo $_SERVER['QUERY_STRING']; ?>
-
-
-  Request Headers:
+<?php if ($isCurl): ?>
+PHP Origin Tools (Basic Output)
+Host name: <?php echo gethostname(); ?>
+Raw query string: <?php echo $_SERVER['QUERY_STRING']; ?>
+Request Headers:
   <?php
   $requestHeaders = function_exists('apache_request_headers') ? apache_request_headers() : [];
   foreach ($requestHeaders as $header => $value) {
       echo "$header: $value\n";
   }
   ?>
-
-
-  POST Values:
-  <?php print_r($_POST); ?>
-
-
-      </pre>
-    </body>
-  <?php else: ?>
+POST Values:
+<?php print_r($_POST); ?>
+<?php else: ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <!--
