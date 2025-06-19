@@ -4,7 +4,9 @@ function getCpuLoad() {
   if (function_exists('sys_getloadavg')) {
     $load = sys_getloadavg();
     if ($load && isset($load[0])) {
-      return $load[0];
+      // Clamp and cast to int between 0 and 100
+      $value = (int)round($load[0]);
+      return max(0, min(100, $value));
     }
   }
   // Fallback for Windows or if sys_getloadavg is unavailable
@@ -13,11 +15,12 @@ function getCpuLoad() {
     @exec('wmic cpu get loadpercentage /value', $output);
     foreach ($output as $line) {
       if (preg_match('/LoadPercentage=(\d+)/', $line, $matches)) {
-        return $matches[1];
+        $value = (int)$matches[1];
+        return max(0, min(100, $value));
       }
     }
   }
-  return 'N/A';
+  return 0;
 }
 
 header('x-as-current-load: ' . getCpuLoad());
